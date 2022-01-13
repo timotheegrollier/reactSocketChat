@@ -13,7 +13,6 @@ const Home = () => {
        socket.on("msgNotif",()=>{
            fetchMessages()
        })
-       socket.on("deleted",fetchMessages())
     }, []);
     
     const sendMessage = (e) => {
@@ -29,7 +28,6 @@ const Home = () => {
     const postToDb = async (newMessage)=>{
         await axios.post('/api/messages/new', newMessage)
             .then()
-            .catch(console.log("erreur d'envoi"))
         document.getElementById('message').value = ""
         fetchMessages()
     }
@@ -45,7 +43,7 @@ const Home = () => {
             <h1 className='text-center'>Home</h1>
 
             <form action="" onSubmit={sendMessage}>
-                <input type="text" id="message"/>
+                <input type="text" id="message" autoComplete="off"/>
                 <input type="submit" value="Send" />
             </form>
 

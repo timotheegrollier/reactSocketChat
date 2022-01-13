@@ -1,6 +1,5 @@
 const io = require('socket.io-client');
 const Message = require('../models/chatMessage')
-const socketClient = io.connect('http://localhost:3100');
 
 exports.newMessage = (req, res, next) => {
     let newMessage = new Message({ ...req.body })
@@ -17,7 +16,6 @@ exports.getMessages = (req, res, next) => {
 
 exports.deleteMessages = (req, res) => {
     Message.deleteMany()
-        .then(() => { res.status(200).json({ msg: "Tchat supprimé !" }); socketClient.emit("deleted") })
-        .catch((error) => res.status(400).json({ error }))
-
+    .then(() => res.status(200).json({ msg: "Tchat supprimé !" }))
+    .catch((error) => res.status(400).json({ error }))
 }
