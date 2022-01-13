@@ -7,19 +7,20 @@ class Nav extends Component {
         // N’appelez pas `this.setState()` ici !
         this.state = {
              counter: 0 ,
-            selectedUrl:window.location.href,
             };
     }
 
 componentDidMount(){
-    if(this.state.selectedUrl.includes("/about")){
+    var path = window.location.pathname;
+    if(path === "/about"){
         document.getElementById("about").classList.add('selected')
-    } else if (this.state.selectedUrl == "http://localhost:3000/" || "https://socket-tchat.herokuapp.com"){
+    } else if (path === "/"){
         document.getElementById("home").classList.add('selected')
-    }else if(this.state.selectedUrl.includes('/inscription')){
+    }else if(path == "/inscription"){
         document.getElementById("signup").classList.add('selected')
     }
 }
+
 
     render() {
         return (
