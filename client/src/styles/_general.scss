@@ -8,9 +8,9 @@ ul {
     list-style: none;
 }
 
-body{
+body {
     height: 100vh;
-    #root{
+    #root {
         height: 100%;
     }
 }
@@ -28,14 +28,39 @@ nav {
         justify-content: space-around;
         width: 40%;
     }
+
+    a {
+        position: relative;
+        text-decoration: none;
+        color: white;
+
+        &:hover {
+            color: white;
+        }
+
+    }
+
+            .selected {
+                &::after {
+                    content: "";
+                    height: 1px;
+                    background-color: white;
+                    position: absolute;
+                    bottom: -5px;
+                    left: 50%;
+                    animation: navAnim 0.6s ease-in-out;
+                    transform: translateX(-50%);
+                    width: 100%;
+                }
+            }
+           
 }
 
-
-textarea{
+textarea {
     resize: none !important;
 }
 
-#messageForm{
+#messageForm {
     width: 95%;
     display: flex;
     justify-content: space-between;
@@ -43,11 +68,29 @@ textarea{
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    input[type=text]{
+    input[type="text"] {
         width: 90%;
         padding: 10px !important;
     }
-    input[type=submit]{
+    input[type="submit"] {
         padding: 10px !important;
     }
 }
+
+ @media screen and(max-width:580px) {
+                nav{
+                    ul{
+
+                        width: 100% !important;
+                    }
+                }
+            }
+
+            @keyframes navAnim {
+                from{
+                    width: 0%;
+                }
+                100%{
+                    width: 100%;
+                }
+            }

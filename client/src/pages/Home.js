@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import Nav from '../components/Nav';
 import socketIOClient from "socket.io-client";
 import axios from "axios";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 
 const Home = () => {
-    const [msg,setMsg] = useState([])
+    const [msg,setMsg] = useStateIfMounted([])
     useEffect(() => {
         fetchMessages()
 
@@ -15,8 +16,8 @@ const Home = () => {
        })
        socket.on("reset",()=>{
            fetchMessages()
-           console.log("pute");
        })
+
 
         return () => socket.disconnect();
 
