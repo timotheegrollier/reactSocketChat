@@ -15,9 +15,10 @@ const Home = () => {
        })
        socket.on("reset",()=>{
            fetchMessages()
+           console.log("pute");
        })
 
-        // return () => socket.disconnect();
+        return () => socket.disconnect();
 
     }, []);
 
