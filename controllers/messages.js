@@ -20,7 +20,7 @@ exports.deleteMessages = (req, res) => {
     Message.deleteMany()
     .then(()=>{
         res.status(200).json({ msg: "Tchat supprimé !" });
-        const socketClient = io.connect('http://localhost:3100'); // For socket reset tchat
+        const socketClient = io.connect('https://localhost:3100'); // For socket reset tchat
         socketClient.on('connect', () => {
             socketClient.emit('resetTchat');
             console.log("reset");
