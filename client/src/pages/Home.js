@@ -6,7 +6,6 @@ import axios from "axios";
 
 const Home = () => {
     const [msg,setMsg] = useState([])
-    const [userCount,setUserCount] = useState(0)
     useEffect(() => {
         fetchMessages()
 
@@ -17,6 +16,8 @@ const Home = () => {
        socket.on("reset",()=>{
            fetchMessages()
        })
+
+        // return () => socket.disconnect();
 
     }, []);
 
@@ -48,10 +49,7 @@ const Home = () => {
         <div>
             <Nav></Nav>
             <h1 className='text-center'>Home</h1>
-            <form className="d-flex justify-content-center flex-column align-items-center" action="" onSubmit={sendMessage}>
-                <textarea name="message" id="message" cols="30" rows="10"></textarea>
-                <input type="submit" value="Send" />
-            </form>
+
 
             <ul id="tchat">
         {msg && (
@@ -60,6 +58,11 @@ const Home = () => {
             })
         )}
             </ul>
+
+            <form id="messageForm" action="" onSubmit={sendMessage}>
+                <input name="message" type="text" id="message" autoComplete="off"></input>
+                <input type="submit" value="Send" className="btn btn-primary" />
+            </form>
         </div>
     );
 };

@@ -36,6 +36,8 @@ const errorHandler = error => {
 };
 
 const server = http.createServer(app);
+
+// SOCKET
 var io = require('socket.io')(server);
 
 io.on("connection",(socket)=>{
@@ -50,8 +52,13 @@ io.on("connection",(socket)=>{
     socket.on('newMsg',()=>{
         io.emit('msgNotif')
     })
+
+    socket.on('resetTchat',()=>{
+        io.emit('reset')
+    })
 })
 
+// SERVER
 
 server.on('error', errorHandler);
 server.on('listening', () => {

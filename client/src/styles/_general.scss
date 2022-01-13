@@ -34,3 +34,20 @@ nav {
 textarea{
     resize: none !important;
 }
+
+#messageForm{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    input[type=text]{
+        width: 90%;
+        padding: 10px !important;
+    }
+    input[type=submit]{
+        padding: 10px !important;
+    }
+}
