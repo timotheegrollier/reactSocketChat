@@ -50,7 +50,7 @@ io.on("connection",(socket)=>{
     });
 
     socket.on('newMsg',()=>{
-        io.emit('msgNotif')
+        io.emit('newMsg')
     })
 
     socket.on('resetTchat',()=>{

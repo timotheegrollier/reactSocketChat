@@ -16,7 +16,7 @@ componentDidMount(){
         document.getElementById("about").classList.add('selected')
     } else if (path === "/"){
         document.getElementById("home").classList.add('selected')
-    }else if(path == "/inscription"){
+    }else if(path === "/inscription"){
         document.getElementById("signup").classList.add('selected')
     }
 }

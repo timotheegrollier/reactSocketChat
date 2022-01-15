@@ -63,7 +63,7 @@ textarea {
 #messageForm {
     width: 95%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     position: absolute;
     bottom: 10px;
     left: 50%;
@@ -73,8 +73,9 @@ textarea {
         padding: 10px !important;
     }
     input[type="submit"] {
-        padding: 10px !important;
+        margin-left: 10px !important;
     }
+
 }
 
  @media screen and(max-width:580px) {
