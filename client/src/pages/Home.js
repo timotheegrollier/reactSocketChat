@@ -79,9 +79,6 @@ const Home = () => {
     return (
         <div>
             <Nav></Nav>
-            <h1 className='text-center'>Home</h1>
-
-
             <ul id="tchat">
                 {msg && (
                     msg.map((msg) => {
