@@ -6,10 +6,9 @@ const About = () => {
         <div>
             <Nav></Nav>
             <h1 className='text-center'>About</h1>
-            <p className='text-center mt-2'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem, itaque, consectetur qui ab exercitationem quaerat quam asperiores fuga, dignissimos odio sint. Nostrum iste inventore qui? Temporibus incidunt necessitatibus doloribus provident a reprehenderit distinctio commodi adipisci quidem sequi! Nobis repellat voluptatem, rerum, dolores dolorem natus, asperiores porro quos ex reiciendis sunt repudiandae eveniet necessitatibus nemo quas placeat eos modi? Delectus, soluta.</p>
             <div className="text-center mt-5">
                 <p>Ce tchat est uniquement à but d'entrainement :</p>
-                <ul>
+                <ul className='mx-2 mt-4'>
                     <li>Etablir un tchat avec la librairie Socket.IO afin d'éviter les requêtes inutiles</li>
                     <li>Interface dynamique et Responsive</li>
                     <li>Système d'authentification et d'enregistrement pour accéder au tchat (bientôt)</li>
