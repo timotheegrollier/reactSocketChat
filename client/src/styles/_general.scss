@@ -61,11 +61,11 @@ textarea {
 }
 
 #messageForm {
-    width: 95%;
+    width: 90%;
     display: flex;
     justify-content: center;
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
     input[type="text"] {
