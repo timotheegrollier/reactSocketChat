@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Nav from '../components/Nav';
 import socketIOClient from "socket.io-client";
 import axios from "axios";
@@ -9,6 +9,7 @@ const Home = () => {
     const [msg, setMsg] = useStateIfMounted([])
     const [submitted, setSubmitted] = useStateIfMounted(false)
     const [errors, setErrors] = useStateIfMounted()
+    const sendBtn = useRef()
 
     useEffect(() => {
         fetchMessages()
@@ -27,7 +28,7 @@ const Home = () => {
     }, []);
 
 
-    
+
     const sendMessage = (e) => {
         e.preventDefault();
         let newMessage = {
@@ -41,6 +42,7 @@ const Home = () => {
                 socket.emit("newMsg")
                 document.getElementById('message').value = ""
                 setSubmitted(false)
+                sendBtn.current.setAttribute("disabled", "disabled")
                 document.getElementById("message").focus()
             })
             .catch(() => {
@@ -50,8 +52,11 @@ const Home = () => {
     }
 
 
-    const fetchMessages = () => {
-        axios.get('/api/messages').then(res => setMsg(res.data.messages).catch(console.log(res)))
+    const fetchMessages = async () => {
+      await  axios.get('/api/messages')
+            .then(res => setMsg(res.data.messages))
+            .catch(error => console.log(error))
+        document.getElementById("tchat").scrollTop = document.getElementById("tchat").scrollHeight - document.getElementById("tchat").clientHeight
     }
 
     if (errors) {
@@ -60,6 +65,14 @@ const Home = () => {
         }, 1500)
     }
 
+    const checkMessage = (e) => {
+        let message = e.target.value;
+        if (message === "") {
+            sendBtn.current.setAttribute("disabled", "disabled")
+        } else {
+            sendBtn.current.removeAttribute("disabled")
+        }
+    }
 
 
 
@@ -82,12 +95,10 @@ const Home = () => {
                 {errors && (
                     <p style={{ color: "red", display: "flex", position: "absolute", top: "-50px" }}>{errors}</p>
                 )}
-                <input style={submitted ? { display: "none" } : { display: "block" }} autoFocus name="message" type="text" id="message" autoComplete="off"></input>
-                <input style={submitted ? { display: "none" } : { display: "block" }} autoFocus name="message" type="text" id="message" autoComplete="off" id="sendBtn" type="submit" value="Send" className="btn btn-primary col-2" />
-                <button style={submitted ? { display: "block" } : { display: "none" }} class="btn btn-primary col-4" type="button" disabled>
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                    <span class="sr-only">Loading...</span>
-                </button>
+                <input style={submitted ? { display: "none" } : { display: "block" }} autoFocus name="message" type="text" id="message" autoComplete="off" onChange={checkMessage} ></input>
+                <input ref={sendBtn} style={submitted ? { display: "none" } : { display: "block" }} id="sendBtn" type="submit" value="Send" className="btn btn-primary col-2" disabled />
+                <div className="spinner-grow" style={!submitted ? { display: "none" } : { width: '3rem', height: '3rem' }} role="status">
+                </div>
             </form>
         </div>
     );
