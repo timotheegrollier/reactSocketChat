@@ -26,7 +26,7 @@ const Home = () => {
             setUserCount(count)
         })
 
-        return () => socket.disconnect();
+        // return () => socket.disconnect();
 
     }, []);
 
@@ -82,7 +82,7 @@ const Home = () => {
     return (
         <div>
             <Nav></Nav>
-            <h3>Utilisateurs en ligne :  
+            <h3>Utilisateurs en ligne :   
                 {userCount}
             </h3>
             <ul id="tchat">
