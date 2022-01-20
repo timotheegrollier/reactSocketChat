@@ -39,11 +39,17 @@ const server = http.createServer(app);
 
 // SOCKET
 var io = require('socket.io')(server);
+let userCount = 0
 
 io.on("connection",(socket)=>{
     console.log("Client connected");
+    userCount++
+io.emit("count",userCount)
     socket.on("disconnect", () => {
         console.log("Client disconnected");
+        userCount--
+        io.emit("count", userCount)
+
     });
     socket.on('npmStop', () => {
         process.exit(0);
@@ -55,6 +61,10 @@ io.on("connection",(socket)=>{
 
     socket.on('resetTchat',()=>{
         io.emit('reset')
+    })
+
+    socket.on('count',(count)=>{
+        io.emit('refreshCount',count)
     })
 })
 

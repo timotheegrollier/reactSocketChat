@@ -10,10 +10,10 @@ const Home = () => {
     const [submitted, setSubmitted] = useStateIfMounted(false)
     const [errors, setErrors] = useStateIfMounted()
     const sendBtn = useRef()
+    const [userCount,setUserCount] = useStateIfMounted()
 
     useEffect(() => {
         fetchMessages()
-
         const socket = socketIOClient();
         socket.on("newMsg", () => {
             fetchMessages()
@@ -22,6 +22,9 @@ const Home = () => {
             fetchMessages()
         })
 
+        socket.on('count',(count)=>{
+            setUserCount(count)
+        })
 
         return () => socket.disconnect();
 
@@ -79,6 +82,9 @@ const Home = () => {
     return (
         <div>
             <Nav></Nav>
+            <h3>Utilisateurs en ligne :  
+                {userCount}
+            </h3>
             <ul id="tchat">
                 {msg && (
                     msg.map((msg) => {
