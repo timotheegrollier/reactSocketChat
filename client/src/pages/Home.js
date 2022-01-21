@@ -11,22 +11,23 @@ const Home = () => {
     const [errors, setErrors] = useStateIfMounted()
     const sendBtn = useRef()
     const [userCount,setUserCount] = useStateIfMounted()
+    const socketRef = useRef()
 
     useEffect(() => {
         fetchMessages()
-        const socket = socketIOClient();
-        socket.on("newMsg", () => {
+        socketRef.current = socketIOClient()
+        socketRef.current.on("newMsg", () => {
             fetchMessages()
         })
-        socket.on("reset", () => {
+        socketRef.current.on("reset", () => {
             fetchMessages()
         })
 
-        socket.on('count',(count)=>{
+        socketRef.current.on('count',(count)=>{
             setUserCount(count)
         })
 
-        // return () => socket.disconnect();
+        return () => socketRef.current.disconnect();
 
     }, []);
 
@@ -38,11 +39,10 @@ const Home = () => {
             message: document.getElementById('message').value
         }
         setSubmitted(true)
-        const socket = socketIOClient();
 
         axios.post('/api/messages/new', newMessage)
             .then(() => {
-                socket.emit("newMsg")
+                socketRef.current.emit("newMsg")
                 document.getElementById('message').value = ""
                 setSubmitted(false)
                 sendBtn.current.setAttribute("disabled", "disabled")

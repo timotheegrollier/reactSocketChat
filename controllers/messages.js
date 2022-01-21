@@ -24,9 +24,7 @@ exports.deleteMessages = (req, res) => {
          // For socket reset tchat //for heroku https://socket-tchat.herokuapp.com/
         socketClient.on('connect', () => {
             socketClient.emit('resetTchat');
-            setTimeout(()=>{
                 socketClient.disconnect()
-            },1000)
         });
 
     })
