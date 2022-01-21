@@ -82,9 +82,7 @@ const Home = () => {
     return (
         <div>
             <Nav></Nav>
-            <h3>Utilisateurs en ligne :   
-                {userCount}
-            </h3>
+ 
             <ul id="tchat">
                 {msg && (
                     msg.map((msg) => {
@@ -92,7 +90,12 @@ const Home = () => {
                     })
                 )}
             </ul>
-
+            
+            {userCount && (
+            <h3 className="text-center">Utilisateurs en ligne:
+                { " " + userCount}
+            </h3>
+            )}
 
             <form id="messageForm" action="" onSubmit={sendMessage} >
                 {errors && (
