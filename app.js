@@ -10,6 +10,8 @@ const app = express()
 
 const msgRoutes = require('./routes/messages')
 
+const usersRoutes = require('./routes/users')
+
 
 const DBUSER = process.env.DBUSER
 
@@ -40,6 +42,9 @@ mongoose.connect("mongodb+srv://" + DBUSER + "@cluster0.zvv7c.mongodb.net/myFirs
 
 
 app.use('/api/messages', msgRoutes)
+
+
+app.use('/api/secure', usersRoutes)
 
 
 

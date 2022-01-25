@@ -17,7 +17,7 @@ componentDidMount(){
     } else if (path === "/"){
         document.getElementById("home").classList.add('selected')
     }else if(path === "/inscription"){
-        document.getElementById("signup").classList.add('selected')
+        document.getElementById("signupLink").classList.add('selected')
     }
 }
 
@@ -34,7 +34,7 @@ componentDidMount(){
                             <Link id='about' className='navLink' to="/about">About</Link>
                         </li>
                         <li>
-                            <Link id='signup' className='navLink' to="/inscription">Signup</Link>
+                            <Link id='signupLink' className='navLink' to="/inscription">Signup</Link>
                         </li>
                     </ul>
                 </nav>

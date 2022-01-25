@@ -1,0 +1,21 @@
+#signup {
+    height: 70vh;
+    form {
+        margin-top: 20px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 90%;
+    }
+    input[type=email],input[type=password]{
+        width: 80%;
+    }
+input[type="checkbox"]{
+    margin-left: 20px !important;
+}
+
+.checkterms{
+    margin-bottom: 50px !important;
+}
+}
