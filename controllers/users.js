@@ -50,3 +50,7 @@ exports.login = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     User.find().then(users => res.status(200).json({ users })).catch(() => res.status(401))
 }
+
+exports.deleteAll = (req,res,next)=>{
+    User.deleteMany().then(res.status(200).json({msg:"reset"}))
+}
