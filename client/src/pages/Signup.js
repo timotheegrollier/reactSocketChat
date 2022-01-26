@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 
 const Signup = () => {
@@ -10,6 +11,9 @@ const Signup = () => {
     const terms = useRef()
     const [errors, setErrors] = useState()
     const [uniqueErrors, setUniqueErrors] = useState()
+    const navigate = useNavigate()
+
+
     const newUser = (e) => {
         e.preventDefault()
         const user = {
@@ -24,6 +28,16 @@ const Signup = () => {
                     console.log(res);
                     setErrors()
                     setUniqueErrors()
+                    axios.post('/api/secure/login',user).then(res =>{
+                        const userConnected = {
+                            token: res.data.token,
+                            userId: res.data.userId,
+                            expiry: new Date().getTime() + 86400000
+                        }
+                        localStorage.setItem('JWT', JSON.stringify(userConnected))
+                        navigate('/')
+                    }     
+                    )
                 })
                 .catch(error => {
                     if (error.response.status === 422) {

@@ -26,7 +26,7 @@ exports.signup = (req, res, next) => {
     }
 
     // ENCODAGE
-        bcrypt.hash(req.body.password, 10)
+        bcrypt.hash(password, 10)
             .then(hash => {
                 const user = new User({
                     pseudo: req.body.pseudo,
@@ -43,7 +43,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ pseudo: req.body.pseudo })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé' })
