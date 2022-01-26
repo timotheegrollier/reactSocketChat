@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 
 
 export default class Login extends Component {
@@ -34,20 +36,22 @@ export default class Login extends Component {
         return (
 
             <div id='loginComponent'>
-               
                 <h3>Login</h3>
+                <p className='col-10 text-center text-muted mt-3 mb-2 h6'>Hey welcome bro !<br />You need to login for access tchat </p>
                 <form className='col-10 col-md-6' action="" onSubmit={this.login}>
-                    <label htmlFor="pseudo">Pseudo :</label>
+                    <label className='text-center h6' htmlFor="pseudo">Pseudo :</label>
                     <input id='pseudo' type="text" name="pseudo" className='form-control' />
-                    <label htmlFor="password">Password :</label>
+                    <label className='text-center h6' htmlFor="password">Password :</label>
                     <input id='password'  type="password" name="password" className='form-control' />
                     <div className="d-flex justify-content-center">
-                    <button type="submit" className='btn btn-success col-6 col-sm-3'>Login</button>
+                    <button type="submit" className='btn btn-success col-6 col-sm-3 mt-3'>Login</button>
                     </div>
                 </form>
                 {this.state.loginError && (
                     <p className='text-danger text-center'>{this.state.loginError}</p>
                 )}
+                <p className='mt-3'>Haven't got an account yet ? </p>
+                <Link to="/register">Register now !</Link>
             </div>
         )
     }

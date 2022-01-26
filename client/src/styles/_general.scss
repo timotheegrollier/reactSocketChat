@@ -23,6 +23,7 @@ nav {
     background: #000;
     align-items: center;
     height: 10vh;
+    position: relative;
     ul {
         display: flex;
         align-items: center;
@@ -53,6 +54,14 @@ nav {
                     transform: translateX(-50%);
                     width: 100%;
                 }
+            }
+
+                h1{
+                    position: absolute;
+                    right: 5px !important;
+                    &:hover{
+                        cursor: pointer;
+                    }
             }
            
 }

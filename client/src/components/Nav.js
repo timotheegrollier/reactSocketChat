@@ -31,7 +31,7 @@ this.setState({connected:true})
         } else if (path === "/") {
             document.getElementById("home").classList.add('selected')
         } else if (path === "/inscription") {
-            document.getElementById("signupLink").classList.add('selected')
+            document.getElementById("register").classList.add('selected')
         }
     }
     
@@ -63,7 +63,7 @@ this.setState({connected:true})
                         </li>
                         {!this.state.connected ? (
                             <li>
-                                <Link id='signupLink' className='navLink' to="/inscription">Signup</Link>
+                                <Link id='register' className='navLink' to="/register">Signup</Link>
                             </li>
                         ) : 
                         (
@@ -73,6 +73,7 @@ this.setState({connected:true})
                         )
                         }
                     </ul>
+                        <h1>SocketTchat</h1>
                 </nav>
             </div>
         );
