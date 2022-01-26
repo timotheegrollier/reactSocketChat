@@ -3,9 +3,9 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 
 const tchatUserSchema = mongoose.Schema({
-    //pseudo:{type:String,required:true, minLength:4,maxLength:20},
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    pseudo: { type: String, required: true, unique: true, minLength: 4, maxLength: 12 },
+    password: { type: String, required: true },
+    createdAt:{type:Date,required:true}
 })
 
 tchatUserSchema.plugin(uniqueValidator);

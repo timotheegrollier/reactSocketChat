@@ -5,57 +5,63 @@ import axios from "axios";
 
 const Signup = () => {
     const password = useRef()
-    const email = useRef()
+    const confirmPassword = useRef()
+    const pseudo = useRef()
+    const terms = useRef()
     const [errors, setErrors] = useState()
     const [uniqueErrors, setUniqueErrors] = useState()
     const newUser = (e) => {
         e.preventDefault()
         const user = {
-            email: email.current.value,
-            password: password.current.value
+            pseudo: pseudo.current.value,
+            password: password.current.value,
+            confirmPass:confirmPassword.current.value,
+            createdAt: new Date(),
+            terms: terms.current.checked
         }
-        axios.post('/api/secure/signup', user)
-            .then(res => {
-                console.log(res);
-                setErrors()
-                setUniqueErrors()
-            })
-            .catch(error => {
-                if (error.response.status === 422) {
-                    setErrors(error.response.data.errors)
-                    console.log(error.response.data.errors)
-                }
-                if (error.response.data.error.message.includes('unique')) {
-                    setUniqueErrors("Email & Pseudo must be unique")
-                }
-                console.log(error.response.data)
-            })
+            axios.post('/api/secure/signup', user)
+                .then(res => {
+                    console.log(res);
+                    setErrors()
+                    setUniqueErrors()
+                })
+                .catch(error => {
+                    if (error.response.status === 422) {
+                        setErrors(error.response.data.errors)
+                        console.log(error.response.data.errors)
+                    }
+                    if (error.response.data.error){
+                            setUniqueErrors("Pseudo must be unique")
+                    }else{
+                        setUniqueErrors(error.response.data.termsError)
+                    }
+                    console.log(error.response);
+                })
+        
     }
 
 
-  useEffect(()=>{
-      if (uniqueErrors){
-          setErrors()
-      }else{
-          setUniqueErrors()
-      }
-  })
+    useEffect(() => {
+        if (uniqueErrors) {
+            setErrors()
+        } else {
+            setUniqueErrors()
+        }
+    })
 
     return (
         <div id='signup'>
             <Nav></Nav>
             <h1 className='text-center'>Signup</h1>
             <form action="" onSubmit={newUser}>
-                <label htmlFor="email">Pseudo :</label>
-                <input type="text" name="pseudo" className='form-control'  />
-                <label htmlFor="email">Email :</label>
-                <input type="email" name="email" className='form-control' ref={email}/>
+                <label htmlFor="pseudo">Pseudo :</label>
+                <input type="text" name="pseudo" ref={pseudo} className='form-control' />
                 <label htmlFor="password">Password :</label>
                 <input ref={password} type="password" name="password" className='form-control' />
                 <label htmlFor="password">Confirm password :</label>
-                <input type="password" name="confirmPassword" className='form-control' />
+                <input ref={confirmPassword} type="password" name="confirmPassword" className='form-control' />
                 <label className="form-check-label d-flex align-items-center checkterms" htmlFor="acceptTerms">Accept terms of use ?
-                    <input type="checkbox" className="form-check-input p1" name='acceptTerms' id='acceptTerms' />
+                    <input ref={terms} type="checkbox" className="form-check-input p1" name='acceptTerms' id='acceptTerms' />
                 </label>
                 <button type="submit" className='btn btn-success col-6 col-sm-3'>Signup</button>
             </form>

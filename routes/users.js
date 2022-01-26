@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const usersCtrl = require('../controllers/users')
-const { check, validationResult } = require('express-validator');
+const { check } = require('express-validator');
 
 
-router.post('/signup',[check('email').isEmail().withMessage('Email is invalid'),check('password').isLength({min:3,max:20}).withMessage('Password is not valid')], usersCtrl.signup)
+router.post('/signup', [check('pseudo').isLength({ min: 4, max: 12 }).withMessage('Pseudo must be at least 4 characters and 12 max'), check('password').isLength({ min: 4, max: 20 }).withMessage('Password be at least 4 characters')], usersCtrl.signup)
 router.post('/login', usersCtrl.login)
 router.get('/',usersCtrl.getAll)
 router.delete('/reset',usersCtrl.deleteAll)

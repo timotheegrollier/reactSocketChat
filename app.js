@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config()
 
-const path = require('path')
+const path = require('path');
+const tchatUser = require('./models/tchatUser');
 
 const app = express()
 
@@ -39,7 +40,6 @@ mongoose.connect("mongodb+srv://" + DBUSER + "@cluster0.zvv7c.mongodb.net/myFirs
     })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
-
 
 app.use('/api/messages', msgRoutes)
 
