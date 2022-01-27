@@ -22,7 +22,7 @@ nav {
     justify-content: flex-start;
     background: #000;
     align-items: center;
-    height: 10vh;
+    height: 8vh;
     position: relative;
     ul {
         display: flex;
@@ -58,7 +58,9 @@ nav {
 
                 h1{
                     position: absolute;
-                    right: 5px !important;
+                    right: 20px !important;
+                    font-size: 1.4em;
+                    color: white;
                     &:hover{
                         cursor: pointer;
                     }
