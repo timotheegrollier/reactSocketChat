@@ -63,9 +63,13 @@ const Signup = () => {
         }
     })
 
+
+    const brandLink = () => {
+        navigate('/')
+    }
     return (
         <div id='signup'>
-            <Nav></Nav>
+            <Nav navigate={brandLink}></Nav>
             <h1 className='text-center'>Signup</h1>
             <form action="" onSubmit={newUser}>
                 <label htmlFor="pseudo">Pseudo :</label>

@@ -10,16 +10,14 @@ class Nav extends Component {
             counter: 0,
             connected:false,
         };
+        this.navigate = this.props.navigate
+        this.handleClick = ()=>{
+            this.navigate()
+        };
     }
 
-componentDidUpdate(prev){
-    if(prev.Logged !== this.props.Logged)
-        setTimeout(() => {
 
-this.setState({connected:true})
-        }, 500)
-
-}
+  
     
 
     componentDidMount() {
@@ -33,6 +31,7 @@ this.setState({connected:true})
         } else if (path === "/inscription") {
             document.getElementById("register").classList.add('selected')
         }
+        
     }
     
     checkAndUpdateNav(){
@@ -48,6 +47,7 @@ this.setState({connected:true})
         localStorage.removeItem("JWT")
         window.location.reload()
     }
+
 
 
     render() {
@@ -73,7 +73,7 @@ this.setState({connected:true})
                         )
                         }
                     </ul>
-                        <h1>SocketTchat</h1>
+                        <h1 className='d-none d-sm-block' onClick={this.handleClick}>SocketTchat</h1>
                 </nav>
             </div>
         );

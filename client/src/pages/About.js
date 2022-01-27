@@ -1,10 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
 
 const About = () => {
+
+    const navigate = useNavigate()
+
+
+    const brandLink = () => {
+        navigate('/')
+    }
     return (
         <div>
-            <Nav></Nav>
+            <Nav navigate={brandLink}></Nav>
             <h1 className='text-center'>About</h1>
             <div className="text-center mt-5">
                 <p>Ce tchat est uniquement à but d'entrainement :</p>

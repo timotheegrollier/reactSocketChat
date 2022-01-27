@@ -106,10 +106,13 @@ const Home = () => {
     }
 
 
+    const brandLink = () => {
+        navigate('/')
+    }
 
     return (
         <div id="Home">
-            <Nav logged={connected}></Nav>
+            <Nav navigate={brandLink}></Nav>
             {connected && (
                 
                 <ul id="tchat">
