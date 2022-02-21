@@ -41,10 +41,11 @@ const server = http.createServer(app);
 var io = require('socket.io')(server);
 let userCount = 0
 
-io.on("connection",(socket)=>{
+
+io.on("connection", (socket) => {
     console.log("Client connected");
     userCount++
-io.emit("count",userCount)
+    io.emit("count", userCount)
     socket.on("disconnect", () => {
         console.log("Client disconnected");
         userCount--
@@ -55,17 +56,18 @@ io.emit("count",userCount)
         process.exit(0);
     });
 
-    socket.on('newMsg',()=>{
+    socket.on('newMsg', () => {
         io.emit('newMsg')
     })
 
-    socket.on('resetTchat',()=>{
+    socket.on('resetTchat', () => {
         io.emit('reset')
     })
 
-    socket.on('count',(count)=>{
-        io.emit('refreshCount',count)
+    socket.on('count', (count) => {
+        io.emit('refreshCount', count)
     })
+
 })
 
 // SERVER

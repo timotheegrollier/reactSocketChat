@@ -20,30 +20,31 @@ const Home = () => {
 
 
     useEffect(() => {
-        if (localStorage.getItem('JWT') && JSON.parse(localStorage.getItem('JWT')).expiry > new Date().getTime()){
+        if (localStorage.getItem('JWT') && JSON.parse(localStorage.getItem('JWT')).expiry > new Date().getTime()) {
             setConnected(true)
             fetchMessages()
-        }else{
+        } else {
             setConnected(false)
             localStorage.removeItem("JWT")
         }
 
 
- if (connected){
-     socketRef.current = socketIOClient()
-     socketRef.current.on("newMsg", () => {
-         fetchMessages()
-        })
-        socketRef.current.on("reset", () => {
-            fetchMessages()
-        })
-        
-        socketRef.current.on('count', (count) => {
-            setUserCount(count)
-        })
-        
-        return () => socketRef.current.disconnect();
-    }
+        if (connected) {
+            socketRef.current = socketIOClient()
+            socketRef.current.on("newMsg", () => {
+                fetchMessages()
+            })
+            socketRef.current.on("reset", () => {
+                fetchMessages()
+            })
+
+            socketRef.current.on('count', (count) => {
+                setUserCount(count)
+            })
+
+
+            return () => socketRef.current.disconnect();
+        }
 
     }, [connected]);
 
@@ -73,19 +74,18 @@ const Home = () => {
     const getLogged = async (connected) => {
         await setConnected(connected)
         setUser({
-            userId: localStorage.getItem('userId'),
-            JWT: localStorage.getItem('JWT')
+            userId: JSON.parse(localStorage.getItem('JWT')).userId ,
+            JWT: JSON.parse(localStorage.getItem('JWT')).token 
         })
         window.location.reload()
     }
 
 
     const fetchMessages = async () => {
-        if(connected)
-        {
+        if (connected) {
             await axios.get('/api/messages')
-            .then(res => setMsg(res.data.messages))
-            .catch(error => console.log(error))
+                .then(res => setMsg(res.data.messages))
+                .catch(error => console.log(error))
             document.getElementById("tchat").scrollTop = document.getElementById("tchat").scrollHeight - document.getElementById("tchat").clientHeight
         }
     }
@@ -110,36 +110,44 @@ const Home = () => {
         navigate('/')
     }
 
+
+    const getUserName = async () => {
+        await axios.get('/api/secure/' + JSON.parse(localStorage.getItem('JWT')).userId).then((res) => {
+            console.log(res.data.user.pseudo);
+            
+        })
+    }
+
     return (
         <div id="Home">
             <Nav navigate={brandLink}></Nav>
             {connected && (
-                
+
                 <ul id="tchat">
-                {msg && (
-                    msg.map((msg) => {
-                        return <li key={msg._id}>{msg.message}</li>
-                    })
-                )}
-            </ul>
+                    {msg && (
+                        msg.map((msg) => {
+                            return <li key={msg._id}>{msg.message}</li>
+                        })
                     )}
+                </ul>
+            )}
 
             {userCount && connected && (
                 <h3 className="text-center">Utilisateurs en ligne:
-                {" " + userCount}
+                    {" " + userCount}
                 </h3>
-                )}
-{connected ? 
+            )}
+            {connected ?
                 <form id="messageForm" action="" onSubmit={sendMessage} >
-                {errors && (
-                    <p style={{ color: "red", display: "flex", position: "absolute", top: "-50px" }}>{errors}</p>
+                    {errors && (
+                        <p style={{ color: "red", display: "flex", position: "absolute", top: "-50px" }}>{errors}</p>
                     )}
-                <input style={submitted ? { display: "none" } : { display: "block" }} autoFocus name="message" type="text" id="message" autoComplete="off" onChange={checkMessage} ></input>
-                <input ref={sendBtn} style={submitted ? { display: "none" } : { display: "block" }} id="sendBtn" type="submit" value="Send" className="btn btn-primary col-2" disabled />
-                <div className="spinner-grow" style={!submitted ? { display: "none" } : { width: '3rem', height: '3rem' }} role="status">
+                    <input style={submitted ? { display: "none" } : { display: "block" }} autoFocus name="message" type="text" id="message" autoComplete="off" onChange={checkMessage} ></input>
+                    <input ref={sendBtn} style={submitted ? { display: "none" } : { display: "block" }} id="sendBtn" type="submit" value="Send" className="btn btn-primary col-2" disabled />
+                    <div className="spinner-grow" style={!submitted ? { display: "none" } : { width: '3rem', height: '3rem' }} role="status">
                     </div>
-            </form>
-            : ""}
+                </form>
+                : ""}
             {!connected && (
                 <Login
                     getLogged={getLogged}

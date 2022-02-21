@@ -15,11 +15,11 @@ export default class Login extends Component {
     }
     login(e) {
         e.preventDefault()
-        const user = {
+        const userCredentials = {
             pseudo: document.getElementById('pseudo').value,
             password: document.getElementById('password').value
         }
-        axios.post('/api/secure/login', user).then(async (res) => {
+        axios.post('/api/secure/login', userCredentials).then(async (res) => {
            this.getLogged(true)
            const userConnected = {
                 token:res.data.token,
