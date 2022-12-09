@@ -1,5 +1,10 @@
 const http = require('http');
 const app = require('./app');
+httpProxy = require('http-proxy');
+//
+// Create your proxy server and set the target in the options.
+//
+httpProxy.createProxyServer({target:'http://localhost:3000'}).listen(8000); // See (†)
 
 const normalizePort = val => {
     const port = parseInt(val, 10);
@@ -80,4 +85,3 @@ server.on('listening', () => {
 });
 
 server.listen(port);
-
