@@ -19,9 +19,14 @@ const About = () => {
                 <ul className='mx-2 mt-4'>
                     <li>Etablir un tchat avec la librairie Socket.IO afin d'éviter les requêtes inutiles</li>
                     <li>Interface dynamique et Responsive</li>
-                    <li>Système d'authentification et d'enregistrement pour accéder au tchat (bientôt)</li>
+                    <li>Système d'authentification et d'enregistrement pour accéder au tchat </li>
                     <li>MongoDb</li>
                     <li>Déploiement dans le cloud</li>
+                </ul>
+                <p>Prochaines étapes :</p>
+                <ul className='mx-2 mt-4'>
+                Afficher pseudo
+                Soon...
                 </ul>
             </div>
         </div>
