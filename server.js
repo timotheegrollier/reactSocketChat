@@ -1,5 +1,7 @@
-const http = require('http');
+const https = require('https');
 const app = require('./app');
+
+const fs = require('fs');
 
 
 const normalizePort = val => {
@@ -36,7 +38,7 @@ const errorHandler = error => {
     }
 };
 
-const server = http.createServer(app);
+const server = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./fullchain.pem')},app);
 
 // SOCKET
 var io = require('socket.io')(server);
