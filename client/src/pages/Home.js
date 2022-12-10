@@ -84,7 +84,7 @@ const Home = () => {
 
     const fetchMessages = async () => {
         if (connected) {
-            await axios.get(config.api_url + '/api/messages')
+            await axios.get(config.socket_url + '/api/messages')
                 .then(res => setMsg(res.data.messages))
                 .catch(error => console.log(error))
             document.getElementById("tchat").scrollTop = document.getElementById("tchat").scrollHeight - document.getElementById("tchat").clientHeight
