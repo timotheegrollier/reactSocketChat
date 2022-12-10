@@ -22,10 +22,12 @@ const About = () => {
                     <li>Système d'authentification et d'enregistrement pour accéder au tchat </li>
                     <li>MongoDb</li>
                     <li>Déploiement dans le cloud</li>
+                    <li>Déploiement continu</li>
                 </ul>
                 <p>Prochaines étapes :</p>
                 <ul className='mx-2 mt-4'>
                <li>Afficher pseudo</li> 
+               <li>Notifications</li>
                <li>Soon...</li> 
                 </ul>
             </div>
