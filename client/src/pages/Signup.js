@@ -12,6 +12,8 @@ const Signup = () => {
     const [errors, setErrors] = useState()
     const [uniqueErrors, setUniqueErrors] = useState()
     const navigate = useNavigate()
+    const config = require('../config.json')
+
 
 
     const newUser = (e) => {
@@ -23,7 +25,7 @@ const Signup = () => {
             createdAt: new Date(),
             terms: terms.current.checked
         }
-            axios.post('/api/secure/signup', user)
+            axios.post(config.api_url + '/api/secure/signup', user)
                 .then(res => {
                     console.log(res);
                     setErrors()

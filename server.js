@@ -1,10 +1,6 @@
 const http = require('http');
 const app = require('./app');
-httpProxy = require('http-proxy');
-//
-// Create your proxy server and set the target in the options.
-//
-httpProxy.createProxyServer({target:'http://socket-tchat.tk'}).listen(3000); // See (†)
+
 
 const normalizePort = val => {
     const port = parseInt(val, 10);

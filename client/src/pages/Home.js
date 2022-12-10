@@ -17,6 +17,7 @@ const Home = () => {
     const [user, setUser] = useStateIfMounted()
     const [connected, setConnected] = useStateIfMounted(false)
     const navigate = useNavigate()
+    const config = require('../config.json')
 
 
     useEffect(() => {
@@ -57,7 +58,7 @@ const Home = () => {
         }
         setSubmitted(true)
 
-        axios.post('/api/messages/new', newMessage)
+        axios.post(config.api_url + '/api/messages/new', newMessage)
             .then(() => {
                 socketRef.current.emit("newMsg")
                 document.getElementById('message').value = ""
@@ -83,7 +84,7 @@ const Home = () => {
 
     const fetchMessages = async () => {
         if (connected) {
-            await axios.get('/api/messages')
+            await axios.get(config.api_url + '/api/messages')
                 .then(res => setMsg(res.data.messages))
                 .catch(error => console.log(error))
             document.getElementById("tchat").scrollTop = document.getElementById("tchat").scrollHeight - document.getElementById("tchat").clientHeight
@@ -112,7 +113,7 @@ const Home = () => {
 
 
     const getUserName = async () => {
-        await axios.get('/api/secure/' + JSON.parse(localStorage.getItem('JWT')).userId).then((res) => {
+        await axios.get(config.api_url + '/api/secure/' + JSON.parse(localStorage.getItem('JWT')).userId).then((res) => {
             console.log(res.data.user.pseudo);
             
         })
