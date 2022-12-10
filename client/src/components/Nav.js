@@ -73,7 +73,7 @@ class Nav extends Component {
                         )
                         }
                     </ul>
-                        <h1 className='d-none d-sm-block' onClick={this.handleClick}>SocketTchat</h1>
+                        <div id='brandLogo' className='d-none d-sm-block' onClick={this.handleClick}></div>
                 </nav>
             </div>
         );
