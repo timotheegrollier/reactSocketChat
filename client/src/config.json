@@ -1,4 +1,3 @@
 {
-    "api_url":"https://socket-tchat.tk:3000",
-    "socket_url":"wss://localhost:3000"
+    "api_url":"https://socket-tchat.tk:3000"
 }
