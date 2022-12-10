@@ -25,8 +25,8 @@ const About = () => {
                 </ul>
                 <p>Prochaines étapes :</p>
                 <ul className='mx-2 mt-4'>
-                Afficher pseudo
-                Soon...
+               <li>Afficher pseudo</li> 
+               <li>Soon...</li> 
                 </ul>
             </div>
         </div>
