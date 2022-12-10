@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 
+const config = require('../config.json')
+
 
 export default class Login extends Component {
     constructor(props){
@@ -19,7 +21,7 @@ export default class Login extends Component {
             pseudo: document.getElementById('pseudo').value,
             password: document.getElementById('password').value
         }
-        axios.post('/api/secure/login', userCredentials).then(async (res) => {
+        axios.post(config.api_url + '/api/secure/login', userCredentials).then(async (res) => {
            this.getLogged(true)
            const userConnected = {
                 token:res.data.token,
