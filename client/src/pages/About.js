@@ -24,10 +24,11 @@ const About = () => {
                     <li>Déploiement dans le cloud</li>
                     <li>Déploiement continu</li>
                 </ul>
-                <p>Prochaines étapes :</p>
+                <p>Prochaines updates :</p>
                 <ul className='mx-2 mt-4'>
                <li>Afficher pseudo</li> 
                <li>Notifications</li>
+               <li>Better UI/UX</li>
                <li>Soon...</li> 
                 </ul>
             </div>
