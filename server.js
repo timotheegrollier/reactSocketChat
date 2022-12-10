@@ -38,7 +38,7 @@ const errorHandler = error => {
     }
 };
 
-const server = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./fullchain.pem')},app);
+const server = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
 
 // SOCKET
 var io = require('socket.io')(server);
