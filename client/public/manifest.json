@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Socket-Tchat",
+  "name": "A fast websocket tchat made with ReactJS,ExpressJS and Socket.io",
   "icons": [
     {
       "src": "icon-chat.png",
