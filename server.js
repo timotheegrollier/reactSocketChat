@@ -1,5 +1,7 @@
 const https = require('https');
 const app = require('./app');
+const http = require('http')
+// NE PAS OUBLIER DE RENEW LES CERTS SINON PASSER SUR HTTP MODIFIER AUSSI LE config.json dans React qui sert de .env
 
 const fs = require('fs');
 
@@ -39,6 +41,8 @@ const errorHandler = error => {
 };
 
 const server = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
+// const server = http.createServer();
+
 
 // SOCKET
 var io = require('socket.io')(server);
