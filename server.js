@@ -40,7 +40,7 @@ const errorHandler = error => {
     }
 };
 
-// const server = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
+const sslServer = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
 const server = http.createServer(app);
 
 
@@ -87,3 +87,12 @@ server.on('listening', () => {
 });
 
 server.listen(port);
+
+sslServer.on('error', errorHandler);
+sslServer.on('listening', () => {
+    const address = sslServer.address();
+    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+    console.log('Listening on ' + bind);
+});
+
+sslServer.listen(3001);
