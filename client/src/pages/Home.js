@@ -31,7 +31,7 @@ const Home = () => {
 
 
         if (connected) {
-            socketRef.current = socketIOClient(config.socket_url)
+            socketRef.current = socketIOClient()
             socketRef.current.on("newMsg", () => {
                 fetchMessages()
             })
