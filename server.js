@@ -40,8 +40,8 @@ const errorHandler = error => {
     }
 };
 
-// const server = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
-const server = http.createServer();
+const server = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
+// const server = http.createServer();
 
 
 // SOCKET
