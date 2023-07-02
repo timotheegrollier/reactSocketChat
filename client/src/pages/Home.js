@@ -47,7 +47,7 @@ const Home = () => {
             return () => socketRef.current.disconnect();
         }
 
-    }, [connected]);
+    },[connected]);
 
 
 

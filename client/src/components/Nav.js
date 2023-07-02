@@ -68,7 +68,7 @@ class Nav extends Component {
                         ) : 
                         (
                             <li>
-                                    <a onClick={this.handleLogout} href="#" className='navLink'>Logout </a>
+                                    <a onClick={this.handleLogout} style={{cursor:'pointer'}} className='navLink'>Logout </a>
                             </li>
                         )
                         }

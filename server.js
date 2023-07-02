@@ -18,7 +18,10 @@ const normalizePort = val => {
     return false;
 };
 const port = normalizePort(process.env.PORT || '3000');
+const sslPort = normalizePort(process.env.SSL_PORT || '3001');
 app.set('port', port);
+app.set('sslPort', sslPort);
+
 
 const errorHandler = error => {
     if (error.syscall !== 'listen') {
@@ -40,8 +43,8 @@ const errorHandler = error => {
     }
 };
 
-const sslServer = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
 const server = http.createServer(app);
+const sslServer = https.createServer({key: fs.readFileSync('./privkey.pem'),    cert: fs.readFileSync('./cert.pem')},app);
 
 
 // SOCKET
@@ -91,8 +94,8 @@ server.listen(port);
 sslServer.on('error', errorHandler);
 sslServer.on('listening', () => {
     const address = sslServer.address();
-    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + sslPort;
     console.log('Listening on ' + bind);
 });
 
-sslServer.listen(3001);
+sslServer.listen(sslPort);

@@ -63,7 +63,7 @@ const Signup = () => {
         } else {
             setUniqueErrors()
         }
-    })
+    },[uniqueErrors])
 
 
     const brandLink = () => {
