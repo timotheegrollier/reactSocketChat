@@ -8,11 +8,6 @@ class Nav extends Component {
         // N’appelez pas `this.setState()` ici !
         this.state = {
             counter: 0,
-            connected:false,
-        };
-        this.navigate = this.props.navigate
-        this.handleClick = ()=>{
-            this.navigate()
         };
     }
 
@@ -21,7 +16,6 @@ class Nav extends Component {
     
 
     componentDidMount() {
-        this.checkAndUpdateNav()
         var path = window.location.pathname;
         
         if (path === "/about") {
@@ -33,13 +27,12 @@ class Nav extends Component {
         }
         
     }
-    
-    checkAndUpdateNav(){
-            if (localStorage.getItem('JWT') && JSON.parse(localStorage.getItem('JWT')).expiry > new Date().getTime()) {
-                this.setState({ connected: true })
-            }
 
-    }
+
+
+
+
+
     
 
     handleLogout(e){
@@ -51,6 +44,7 @@ class Nav extends Component {
 
 
     render() {
+        const {brandLink,username,connected} = this.props
         return (
             <div>
                 <nav>
@@ -61,19 +55,20 @@ class Nav extends Component {
                         <li>
                             <Link id='about' className='navLink' to="/about">About</Link>
                         </li>
-                        {!this.state.connected ? (
+                        {!connected ? (
                             <li>
                                 <Link id='register' className='navLink' to="/register">Signup</Link>
                             </li>
                         ) : 
                         (
                             <li>
-                                    <a onClick={this.handleLogout} style={{cursor:'pointer'}} className='navLink'>Logout </a>
+                                    <p onClick={this.handleLogout} style={{cursor:'pointer'}} className='navLink text-white'>Logout </p>
                             </li>
                         )
                         }
                     </ul>
-                        <div id='brandLogo' className='d-none d-sm-block' onClick={this.handleClick}></div>
+                    <h5>{username && username}</h5>
+                        <div id='brandLogo' className='d-none d-sm-block' onClick={brandLink}></div>
                 </nav>
             </div>
         );

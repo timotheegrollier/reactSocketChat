@@ -66,7 +66,11 @@ nav {
                         cursor: pointer;
                     }
             }
-           
+           h5{
+            color: wheat;
+            position: absolute;
+            right: 100px;
+           }
 }
 
 textarea {
@@ -96,6 +100,10 @@ textarea {
                     ul{
 
                         width: 100% !important;
+                    }
+
+                    h5{
+                        display: none;
                     }
                 }
             }

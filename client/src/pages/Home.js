@@ -16,14 +16,16 @@ const Home = () => {
     const socketRef = useRef()
     const [user, setUser] = useStateIfMounted()
     const [connected, setConnected] = useStateIfMounted(false)
+    const [showedWarning,setShowedWarning] = useStateIfMounted(false)
     const navigate = useNavigate()
     const config = require('../config.json')
 
 
     useEffect(() => {
         if (localStorage.getItem('JWT') && JSON.parse(localStorage.getItem('JWT')).expiry > new Date().getTime()) {
-            setConnected(true)
+            getLogged(true)
             fetchMessages()
+
         } else {
             setConnected(false)
             localStorage.removeItem("JWT")
@@ -47,6 +49,7 @@ const Home = () => {
             return () => socketRef.current.disconnect();
         }
 
+        // eslint-disable-next-line 
     },[connected]);
 
 
@@ -57,28 +60,68 @@ const Home = () => {
             message: document.getElementById('message').value
         }
         setSubmitted(true)
+        if(newMessage.message.startsWith('/')){
+           tchatCommands(newMessage.message)
+        }else{
+            postMessage(newMessage);
+        }
 
-        axios.post(config.api_url + '/api/messages/new', newMessage)
-            .then(() => {
-                socketRef.current.emit("newMsg")
-                document.getElementById('message').value = ""
-                setSubmitted(false)
-                sendBtn.current.setAttribute("disabled", "disabled")
-                document.getElementById("message").focus()
-            })
-            .catch(() => {
-                setSubmitted(false)
-                setErrors("Message not sent")
-            })
+
+    }
+
+    const tchatCommands = (command)=>{
+        switch (command) {
+            case '/delete':
+                deleteTchat()
+                break;
+            default:
+                let message = "commands available: /delete"
+                !showedWarning && showWarningHelper(message)
+                break;
+        }
+        document.getElementById('message').value = ""
+        setSubmitted(false)
+    }
+
+
+    const showWarningHelper = (message)=>{
+        const helper = document.createElement('li')
+        helper.classList.add('text-warning')
+        helper.textContent = message
+        setShowedWarning(true)
+        setSubmitted(false)
+        document.getElementById('tchat').appendChild(helper)
+        document.getElementById('message').value = ""
+        setTimeout(()=>{
+            helper.remove()
+            setShowedWarning(false)
+        },5000)
     }
 
     const getLogged = async (connected) => {
-        await setConnected(connected)
-        setUser({
-            userId: JSON.parse(localStorage.getItem('JWT')).userId ,
-            JWT: JSON.parse(localStorage.getItem('JWT')).token 
+        setConnected(connected)
+        getUsername().then((username)=>{
+            setUser({
+                userId: JSON.parse(localStorage.getItem('JWT')).userId ,
+                JWT: JSON.parse(localStorage.getItem('JWT')).token ,
+                username: username
+            })
         })
-        window.location.reload()
+    }
+
+    const postMessage = (newMessage)=>{
+        axios.post(config.api_url + '/api/messages/new', newMessage)
+        .then(() => {
+            socketRef.current.emit("newMsg")
+            document.getElementById('message').value = ""
+            setSubmitted(false)
+            sendBtn.current.setAttribute("disabled", "disabled")
+            document.getElementById("message").focus()
+        })
+        .catch(() => {
+            setSubmitted(false)
+            setErrors("Message not sent")
+        })
     }
 
 
@@ -111,17 +154,28 @@ const Home = () => {
         navigate('/')
     }
 
+    const aboutLink = ()=>{
+        navigate('/about')
+    }
 
-    const getUserName = async () => {
+
+    const getUsername = async () => {
+        let username = "";
         await axios.get(config.api_url + '/api/secure/' + JSON.parse(localStorage.getItem('JWT')).userId).then((res) => {
-            console.log(res.data.user.pseudo);
-            
+            username = res.data.user.pseudo
+        })
+        return username
+    }
+
+    const deleteTchat = ()=>{
+        axios.delete(config.api_url + '/api/messages').then(()=>{
+            socketRef.current.emit('resetTchat')
         })
     }
 
     return (
         <div id="Home">
-            <Nav navigate={brandLink}></Nav>
+            <Nav brandLink={brandLink} connected={connected} username={user && user.username} aboutLink={aboutLink}></Nav>
             {connected && (
 
                 <ul id="tchat">
@@ -134,7 +188,7 @@ const Home = () => {
             )}
 
             {userCount && connected && (
-                <h3 className="text-center">Utilisateurs en ligne:
+                <h3 className="text-center">Online:
                     {" " + userCount}
                 </h3>
             )}

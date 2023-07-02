@@ -21,18 +21,23 @@ export default class Login extends Component {
             pseudo: document.getElementById('pseudo').value,
             password: document.getElementById('password').value
         }
-        axios.post(config.api_url + '/api/secure/login', userCredentials).then(async (res) => {
-           this.getLogged(true)
-           const userConnected = {
-                token:res.data.token,
-                userId:res.data.userId,
-               expiry: new Date().getTime() + 86400000
-            }
-            localStorage.setItem('JWT', JSON.stringify(userConnected))
-        })
-            .catch(res => {
-                this.setState({loginError:res.response.data.error})
+        axios.post(config.api_url + '/api/secure/login', userCredentials).then((res) => {
+            this.storeUser(res.data.token,res.data.userId).then(()=>{
+                this.getLogged(true)
             })
+
+        }).catch(res => {
+                this.setState({loginError: res.response ? res.response.data.error : 'Unable to reach the server !'})
+            })
+    }
+
+   async storeUser (token,userId){
+        const userConnected = {
+            token: token,
+            userId: userId,
+           expiry: new Date().getTime() + 86400000
+        }
+        localStorage.setItem('JWT', JSON.stringify(userConnected))
     }
     render() {
         return (

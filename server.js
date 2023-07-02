@@ -17,8 +17,8 @@ const normalizePort = val => {
     }
     return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
-const sslPort = normalizePort(process.env.SSL_PORT || '3001');
+const port = normalizePort(process.env.PORT || '3001');
+const sslPort = normalizePort(process.env.SSL_PORT || '3002');
 app.set('port', port);
 app.set('sslPort', sslPort);
 

@@ -1,18 +1,37 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {useNavigate } from 'react-router-dom';
 import Nav from '../components/Nav';
+import config from '../config.json'
+import axios from 'axios';
 
 const About = () => {
-
     const navigate = useNavigate()
+    const [connected,setConnected] = useState(false);
+    const [username,setUsername] = useState("")
 
+    useEffect(()=>{
+        if(localStorage.getItem('JWT') && JSON.parse(localStorage.getItem('JWT')).expiry > new Date().getTime()){
+            setConnected(true)
+            getUsername().then((username)=>setUsername(username)) 
+        }
+    },[])
+
+
+    const getUsername = async () => {
+        let username = "";
+        await axios.get(config.api_url + '/api/secure/' + JSON.parse(localStorage.getItem('JWT')).userId).then((res) => {
+            username = res.data.user.pseudo
+        })
+        return username
+    }
 
     const brandLink = () => {
         navigate('/')
     }
+
     return (
         <div>
-            <Nav navigate={brandLink}></Nav>
+            <Nav brandLink={brandLink} connected={connected} username={username}></Nav>
             <h1 className='text-center'>About</h1>
             <div className="text-center mt-5">
                 <p>Ce tchat est uniquement à but d'entrainement :</p>
