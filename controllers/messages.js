@@ -20,7 +20,7 @@ exports.deleteMessages = (req, res) => {
     Message.deleteMany()
     .then(()=>{
         res.status(200).json({ msg: "Tchat supprimé !" }); //http://localhost:3100
-        const socketClient = io.connect('https://socket-tchat.herokuapp.com/');
+        const socketClient = io.connect('http://socket-tchat.tk');
          // For socket reset tchat //for heroku https://socket-tchat.herokuapp.com/
         socketClient.on('connect', () => {
             socketClient.emit('resetTchat');
