@@ -16,7 +16,7 @@ const Home = () => {
     const socketRef = useRef()
     const [user, setUser] = useStateIfMounted()
     const [connected, setConnected] = useStateIfMounted(false)
-    const [showedWarning,setShowedWarning] = useStateIfMounted(false)
+    const [showedWarning, setShowedWarning] = useStateIfMounted(false)
     const navigate = useNavigate()
     const config = require('../config.json')
 
@@ -50,7 +50,7 @@ const Home = () => {
         }
 
         // eslint-disable-next-line 
-    },[connected]);
+    }, [connected]);
 
 
 
@@ -60,16 +60,16 @@ const Home = () => {
             message: document.getElementById('message').value
         }
         setSubmitted(true)
-        if(newMessage.message.startsWith('/')){
-           tchatCommands(newMessage.message)
-        }else{
+        if (newMessage.message.startsWith('/')) {
+            tchatCommands(newMessage.message)
+        } else {
             postMessage(newMessage);
         }
 
 
     }
 
-    const tchatCommands = (command)=>{
+    const tchatCommands = (command) => {
         switch (command) {
             case '/delete':
                 deleteTchat()
@@ -84,7 +84,7 @@ const Home = () => {
     }
 
 
-    const showWarningHelper = (message)=>{
+    const showWarningHelper = (message) => {
         const helper = document.createElement('li')
         helper.classList.add('text-warning')
         helper.textContent = message
@@ -92,36 +92,36 @@ const Home = () => {
         setSubmitted(false)
         document.getElementById('tchat').appendChild(helper)
         document.getElementById('message').value = ""
-        setTimeout(()=>{
+        setTimeout(() => {
             helper.remove()
             setShowedWarning(false)
-        },5000)
+        }, 5000)
     }
 
     const getLogged = async (connected) => {
         setConnected(connected)
-        getUsername().then((username)=>{
+        getUsername().then((username) => {
             setUser({
-                userId: JSON.parse(localStorage.getItem('JWT')).userId ,
-                JWT: JSON.parse(localStorage.getItem('JWT')).token ,
+                userId: JSON.parse(localStorage.getItem('JWT')).userId,
+                JWT: JSON.parse(localStorage.getItem('JWT')).token,
                 username: username
             })
         })
     }
 
-    const postMessage = (newMessage)=>{
+    const postMessage = (newMessage) => {
         axios.post(config.api_url + '/api/messages/new', newMessage)
-        .then(() => {
-            socketRef.current.emit("newMsg")
-            document.getElementById('message').value = ""
-            setSubmitted(false)
-            sendBtn.current.setAttribute("disabled", "disabled")
-            document.getElementById("message").focus()
-        })
-        .catch(() => {
-            setSubmitted(false)
-            setErrors("Message not sent")
-        })
+            .then(() => {
+                socketRef.current.emit("newMsg")
+                document.getElementById('message').value = ""
+                setSubmitted(false)
+                sendBtn.current.setAttribute("disabled", "disabled")
+                document.getElementById("message").focus()
+            })
+            .catch(() => {
+                setSubmitted(false)
+                setErrors("Message not sent")
+            })
     }
 
 
@@ -154,7 +154,7 @@ const Home = () => {
         navigate('/')
     }
 
-    const aboutLink = ()=>{
+    const aboutLink = () => {
         navigate('/about')
     }
 
@@ -167,8 +167,8 @@ const Home = () => {
         return username
     }
 
-    const deleteTchat = ()=>{
-        axios.delete(config.api_url + '/api/messages').then(()=>{
+    const deleteTchat = () => {
+        axios.delete(config.api_url + '/api/messages').then(() => {
             socketRef.current.emit('resetTchat')
         })
     }
@@ -179,19 +179,29 @@ const Home = () => {
             {connected && (
 
                 <ul id="tchat">
-                    {msg && (
+                    {msg && userCount ? (
                         msg.map((msg) => {
                             return <li key={msg._id}>{msg.message}</li>
                         })
-                    )}
+                    ) :
+                        <div className="h-75 d-flex align-items-center justify-content-center">
+                            <div style={{ width: "10rem", height: "10rem" }} className="spinner-border text-primary"></div>
+                        </div>}
                 </ul>
             )}
 
-            {userCount && connected && (
+
+            {userCount && connected ? (
                 <h3 className="text-center">Online:
                     {" " + userCount}
                 </h3>
-            )}
+            ) : <h3 className="text-center">Connexion au tchat en cours
+                <div className="loading-dots">
+                    <div className="dot" id="dot1">.</div>
+                    <div className="dot" id="dot2">.</div>
+                    <div className="dot" id="dot3">.</div>
+                </div>
+            </h3>}
             {connected ?
                 <form id="messageForm" action="" onSubmit={sendMessage} >
                     {errors && (
