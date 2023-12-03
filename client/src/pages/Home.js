@@ -120,7 +120,7 @@ const Home = () => {
                 document.getElementById('message').value = ""
                 setSubmitted(false)
                 sendBtn.current.setAttribute("disabled", "disabled")
-                document.getElementById("message").focus()
+                !isMobile && document.getElementById("message").focus()
             })
             .catch(() => {
                 setSubmitted(false)
