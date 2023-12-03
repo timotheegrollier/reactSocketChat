@@ -19,6 +19,10 @@ const Home = () => {
     const [showedWarning, setShowedWarning] = useStateIfMounted(false)
     const navigate = useNavigate()
     const config = require('../config.json')
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    
+
 
 
     useEffect(() => {
@@ -210,7 +214,7 @@ const Home = () => {
                     {errors && (
                         <p style={{ color: "red", display: "flex", position: "absolute", top: "-50px" }}>{errors}</p>
                     )}
-                    <input style={submitted ? { display: "none" } : { display: "block" }} autoFocus name="message" type="text" id="message" autoComplete="off" onChange={checkMessage} ></input>
+                    <input style={submitted ? { display: "none" } : { display: "block" }} autoFocus={!isMobile}  name="message" type="text" id="message" autoComplete="off" onChange={checkMessage} ></input>
                     <input ref={sendBtn} style={submitted ? { display: "none" } : { display: "block" }} id="sendBtn" type="submit" value="Send" className="btn btn-primary col-2" disabled />
                     <div className="spinner-grow" style={!submitted ? { display: "none" } : { width: '3rem', height: '3rem' }} role="status">
                     </div>
