@@ -185,24 +185,27 @@ const Home = () => {
                         })
                     ) :
                         <div className="h-75 d-flex align-items-center justify-content-center">
-                            <div style={{ width: "10rem", height: "10rem" }} className="spinner-border text-primary"></div>
+                            <div style={{ width: "6rem", height: "6rem" }} className="spinner-border text-primary"></div>
                         </div>}
                 </ul>
             )}
 
 
-            {userCount && connected ? (
-                <h3 className="text-center">Online:
-                    {" " + userCount}
-                </h3>
-            ) : <h3 className="text-center">Connexion au tchat en cours
-                <div className="loading-dots">
-                    <div className="dot" id="dot1">.</div>
-                    <div className="dot" id="dot2">.</div>
-                    <div className="dot" id="dot3">.</div>
-                </div>
-            </h3>}
-            {connected ?
+            {connected && (
+                userCount ?
+                    <h3 className="text-center">Online:
+                        {" " + userCount}
+                    </h3>
+                    :
+                    <h3 className="text-center">Connexion au tchat en cours
+                        <div className="loading-dots">
+                            <div className="dot" id="dot1">.</div>
+                            <div className="dot" id="dot2">.</div>
+                            <div className="dot" id="dot3">.</div>
+                        </div>
+                    </h3>
+            )}
+            {connected && userCount ?
                 <form id="messageForm" action="" onSubmit={sendMessage} >
                     {errors && (
                         <p style={{ color: "red", display: "flex", position: "absolute", top: "-50px" }}>{errors}</p>
